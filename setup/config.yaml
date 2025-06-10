@@ -1,0 +1,28 @@
+config_version: 0.1
+# Configuration for the AI Home Assistant
+# This file contains settings for various components of the system
+models:
+  model_1:
+    name: "Eliza"
+    voice: "en-US-EmmaNeural"
+    wake_phrases: "eliza wake"
+    sleep_phrases: "eliza sleep"
+    emergency_word: "eliza emergency"
+    model: "mythomax-l2-13b"
+    node: "http://192.168.2.14:1234/v1"
+    api_key: "do_not_change_unless_you_know_what_you_are_doing"
+
+text_to_speech:
+  # Configuration for the text-to-speech (TTS) system
+  mode: 2  # 1 = primary only, 2 = primary > failover, 3 = auto (increased network usage)
+  primary_service: "edge_tts"
+  secondary_service: "http://192.168.2.4:5002/api/tts"
+
+speech_to_text:
+  # Configuration for the speech-to-text (STT) system
+  mode: 2  # 1 = primary only, 2 = primary > failover, 3 = auto (increased network usage)
+  primary_service: "google"
+  secondary_service: "http://192.168.2.4:5050/transcribe"
+
+system_settings:
+  general_system_prompt: "You are part of Astrape."
