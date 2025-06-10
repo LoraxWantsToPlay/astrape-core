@@ -4,6 +4,9 @@ _A line in the sand. A spark in the storm._
 
 **Astrape Core** is a modular, locally hosted AI orchestration layer designed for flexibility, control, and extensibility. It is the foundation for larger systems — those meant to serve, not surveil.
 
+This release is the first public artifact: a minimal, functional loop for voice-based interaction.
+
+---
 This repository contains the essential skeleton required to build natural language interfaces with:
 
 - Modular orchestration logic
@@ -13,24 +16,66 @@ This repository contains the essential skeleton required to build natural langua
 - Stateless loop with memory-ready scaffolding
 
 ### ❗ Status
-Pre-alpha. Development is active, but this project is not yet stable.
+Pre-alpha. Active development. Public loop is functional, but future modules (memory, tools, auth) are pending.
 
 ### 🔍 Philosophy
 We believe in software that answers to its user. Astrape Core is built to run on your machines, with your data, under your control.
 
 No cloud. No gatekeepers.
 
-### 🛠️ Requirements
-- Python 3.10+
-- Optional: Docker (setup guide in progress)
-- Works best with local LLMs via [LM Studio](https://lmstudio.ai), but backend-agnostic by design.
+## 🔁 What It Does
 
-### 🧪 Current Capabilities
-- Voice input loop (modular STT integration)
-- Text output via local or cloud TTS
-- Wake/sleep/shutdown event parsing
-- Simple fallback error handling
-- Configurable via YAML
+- Wake/sleep word detection
+- Async voice pipeline: **STT → LLM → TTS**
+- Modular architecture (drop-in replacements supported)
+- TTS failover fallback (Edge, Google, or Coqui)
+
+---
+
+## 📦 What’s Included
+
+| Module           | Description                              |
+|------------------|------------------------------------------|
+| `core/`          | Orchestration, event logic, main loop    |
+| `speech/`        | Whisper STT, TTS wrappers, config-driven |
+| `listen/`        | Mic input and event listener             |
+| `setup/`         | YAML config loader + default management  |
+| `utils/`         | Logger, system tools                     |
+| `start.py`       | Entry point for running Astrape Core     |
+
+---
+
+## 🧪 Quick Start
+
+> Requires Python 3.11+ and [LM Studio](https://lmstudio.ai/) for LLM backend
+
+[LM Studio](https://lmstudio.ai)  
+[Edge TTS](https://pypi.org/project/edge-tts/)  
+[Coqui TTS](https://github.com/coqui-ai/TTS)
+
+1. Set TTS provider (edge (cloud), coqui(local), etc)
+2. Set STT provider (google (cloud), whisper(local), etc)
+3. Add Local LM Studio Endpoint
+
+4. Clone repo and create virtual environment:
+
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python main.py
++```
+
+### 🗣️ Example Usage
+
+> 🧍 "Hey Eliza, can you tell me a story?"  
+> 💬 *(LLM responds)* 
+> 🔊 *(TTS speaks back using Edge or Coqui)*
+> 🧍 "Eliza Sleep"  
+> 💻 *(sleep detected)*
+> 🧍 "Shut Down" (Can be said from either waking or sleep to trigger)
+> 💻 *(system shutdown)*
+
 
 ### 📜 License
 This repository is released under the **GNU Affero General Public License v3.0**.
